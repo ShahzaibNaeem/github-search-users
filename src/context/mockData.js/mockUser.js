@@ -29,9 +29,9 @@ export default {
   bio: "Software Developer",
   twitter_username: null,
   public_repos: 13,
-  public_gists: 0,
+  public_gists: 8,
   followers: 10,
-  following: 0,
+  following: 15,
   created_at: "2022-05-18T14:27:21Z",
   updated_at: "2023-05-05T10:29:58Z",
 };
