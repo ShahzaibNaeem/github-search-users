@@ -1,19 +1,64 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
+import React from "react";
+import { GithubContext } from "../context/context";
+import styled from "styled-components";
+import { MdBusiness, MdLocationOn, MdLink } from "react-icons/md";
+import { useContext } from "react";
+
 const Card = () => {
-  return <h2>card component</h2>;
+  const { githubUser } = useContext(GithubContext);
+  const {
+    login,
+    avatar_url,
+    html_url,
+    name,
+    company,
+    blog,
+    bio,
+    location,
+    twitter_username,
+  } = githubUser;
+
+  return (
+    <>
+      <Wrapper>
+        <header>
+          <img src={avatar_url} alt={name} />
+          <div>
+            <h4>{name}</h4>
+            <p>@{twitter_username || login}</p>
+          </div>
+          <a href={html_url}>follow</a>
+        </header>
+        <p className="bio">{bio}</p>
+        <div className="links">
+          {company && (
+            <p>
+              <MdBusiness /> {company}
+            </p>
+          )}
+          <p>
+            <MdLocationOn /> {location || "Earth"}
+          </p>
+          {blog && (
+            <a href={`https://${blog}`}>
+              <MdLink /> {blog}
+            </a>
+          )}
+        </div>
+      </Wrapper>
+    </>
+  );
 };
+
 const Wrapper = styled.article`
-  background: var(--clr-white);
+  background-color: var(--clr-white);
   padding: 1.5rem 2rem;
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   position: relative;
   &::before {
-    content: 'user';
+    content: "User";
     position: absolute;
     top: 0;
     left: 0;
@@ -27,6 +72,7 @@ const Wrapper = styled.article`
     letter-spacing: var(--spacing);
     font-size: 1rem;
   }
+
   header {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -63,15 +109,15 @@ const Wrapper = styled.article`
     color: var(--clr-grey-3);
   }
   .links {
-    p,
-    a {
+    a,
+    p {
       margin-bottom: 0.25rem;
       display: flex;
       align-items: center;
-      svg {
-        margin-right: 0.5rem;
-        font-size: 1.3rem;
-      }
+    }
+    svg {
+      margin-right: 0.5rem;
+      font-size: 1.3rem;
     }
     a {
       color: var(--clr-primary-5);
@@ -85,4 +131,5 @@ const Wrapper = styled.article`
     }
   }
 `;
+
 export default Card;
