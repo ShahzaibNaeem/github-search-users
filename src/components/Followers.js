@@ -1,9 +1,34 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
+import React, { useContext } from "react";
+import { GithubContext } from "../context/context";
+import styled from "styled-components";
 
 const Followers = () => {
-  return <h2>followers component</h2>;
+  const { followers } = useContext(GithubContext);
+  console.log(followers);
+  return (
+    <>
+      <Wrapper>
+        <div className="followers">
+          {followers.map((follower, index) => {
+            const { avatar_url: img, html_url, login } = follower;
+            return (
+              <>
+                <article key={index}>
+                  <img src={img} alt={login} />
+                  <div>
+                    <h4>{login}</h4>
+                    <a href={html_url} target="_blank">
+                      {html_url}
+                    </a>
+                  </div>
+                </article>
+              </>
+            );
+          })}
+        </div>
+      </Wrapper>
+    </>
+  );
 };
 
 const Wrapper = styled.article`
@@ -12,9 +37,8 @@ const Wrapper = styled.article`
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   position: relative;
-
   &::before {
-    content: ' followers';
+    content: " followers";
     position: absolute;
     top: 0;
     left: 0;
@@ -30,12 +54,25 @@ const Wrapper = styled.article`
   }
   .followers {
     overflow: scroll;
+    overflow-x: hidden;
     height: 260px;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(45px, 1fr));
     gap: 1.25rem 1rem;
     padding: 1rem 2rem;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+      height: 50px;
+    }
   }
+
   article {
     transition: var(--transition);
     padding: 0.15rem 0.5rem;
@@ -58,4 +95,5 @@ const Wrapper = styled.article`
     }
   }
 `;
+
 export default Followers;
